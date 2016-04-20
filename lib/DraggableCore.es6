@@ -268,10 +268,6 @@ export default class DraggableCore extends React.Component {
       this.setState({touchIdentifier: e.targetTouches[0].identifier});
     }
 
-    // Add a style to the body to disable user-select. This prevents text from
-    // being selected all over the page.
-    if (this.props.enableUserSelectHack) addUserSelectStyles();
-
     // Get the current drag point from the event. This is used as the offset.
     let {clientX, clientY} = getControlPosition(e);
 
@@ -285,6 +281,9 @@ export default class DraggableCore extends React.Component {
     let shouldUpdate = this.props.onStart(e, coreEvent);
     if (shouldUpdate === false) return;
 
+    // Add a style to the body to disable user-select. This prevents text from
+    // being selected all over the page.
+    if (this.props.enableUserSelectHack) addUserSelectStyles();
 
     // Initiate dragging. Set the current x and y as offsets
     // so we know how much we've moved during the drag. This allows us
