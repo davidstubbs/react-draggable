@@ -18,6 +18,10 @@ export type DraggableState = {
   slackX: number, slackY: number,
   isElementSVG: boolean
 };
+type ConstructorProps = {
+  start: { x: number, y: number },
+};
+
 
 //
 // Define <Draggable>
@@ -140,22 +144,28 @@ export default class Draggable extends React.Component {
     zIndex: NaN
   };
 
-  state: DraggableState = {
-    // Whether or not we are currently dragging.
-    dragging: false,
+  constructor(props: ConstructorProps) {
+    super(props);
 
-    // Whether or not we have been dragged before.
-    dragged: false,
+    this.state = {
+      // Whether or not we are currently dragging.
+      dragging: false,
 
-    // Current transform x and y.
-    clientX: this.props.start.x, clientY: this.props.start.y,
+      // Whether or not we have been dragged before.
+      dragged: false,
 
-    // Used for compensating for out-of-bounds drags
-    slackX: 0, slackY: 0,
+      // Current transform x and y.
+      clientX: props.start.x, clientY: props.start.y,
 
-    // Can only determine if SVG after mounting
-    isElementSVG: false
-  };
+      // Used for compensating for out-of-bounds drags
+      slackX: 0, slackY: 0,
+
+      // Can only determine if SVG after mounting
+      isElementSVG: false
+    };
+  }
+
+  state: DraggableState;
 
   componentDidMount() {
     // Check to see if the element passed is an instanceof SVGElement
@@ -288,4 +298,3 @@ export default class Draggable extends React.Component {
     );
   }
 }
-
